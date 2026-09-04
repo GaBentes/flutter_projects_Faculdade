@@ -1,0 +1,27 @@
+# Flutter / Dart
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+build/
+
+# Arquivos gerados pelo Flutter
+.packages
+.pub-cache/
+
+# IDE
+.idea/
+.vscode/
+
+# Arquivos temporários
+*.log
+*.tmp
+
+# Arquivos de ambiente e segredos
+.env
+.env.*
+*.key
+*.pem
+
+# Sistema operacional
+.DS_Store
+Thumbs.db

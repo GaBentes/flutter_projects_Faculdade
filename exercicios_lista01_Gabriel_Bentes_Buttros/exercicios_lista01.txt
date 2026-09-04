@@ -1,0 +1,461 @@
+Gabriel Bentes Buttros - 202410040
+
+//Conversor de temperatura -------------------------------------------------------------------------
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MeuApp());
+}
+
+class MeuApp extends StatelessWidget {
+  const new({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: ConversorTemperatura(),
+    );
+  }
+}
+
+class ConversorTemperatura extends StatefulWidget {
+  const new({super.key});
+
+  @override
+  State<ConversorTemperatura> createState() => _ConversorTemperaturaState();
+}
+
+class _ConversorTemperaturaState extends State<ConversorTemperatura> {
+  final TextEditingController grausController = TextEditingController();
+  final TextEditingController farenheitController = TextEditingController();
+
+  void converteTemp() {
+    double temp = double.tryParse(grausController.text) ?? 0.0;
+    setState(() {
+      double tempConvertido = (temp * 9 / 5) + 32;
+      farenheitController.text = tempConvertido % 1 == 0
+        ? '${tempConvertido.toInt()}°F'
+        : '$tempConvertido°F';
+    });
+  }
+
+  void limpaTela(){
+    setState(() {
+      grausController.clear();
+      farenheitController.clear();
+    });
+
+  }
+
+  @override
+  void dispose(){
+    grausController.dispose();
+    farenheitController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('Conversor de temperatura')),
+      body: Padding(
+        padding: EdgeInsetsGeometry.all(20),
+        child: Column(
+          children: [
+            TextField(
+              controller: grausController,
+              decoration: InputDecoration(
+                labelText: 'Celsius',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            SizedBox(height: 20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  onPressed: converteTemp,
+                  child: Text('Converter'),
+                ),
+                SizedBox(height: 10, width: 20),
+                ElevatedButton(
+                  onPressed: limpaTela,
+                  child: Text('Limpar dados'),
+                ),
+              ],
+            ),
+            SizedBox(height: 20),
+            TextField(
+              readOnly: true,
+              controller: farenheitController,
+              decoration: InputDecoration(
+                labelText: 'Fahrenheit',
+                border: OutlineInputBorder(),
+
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+//Calculadora média--------------------------------------------------------------------------------
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MeuApp());
+}
+
+class MeuApp extends StatelessWidget {
+  const new({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: CalculadoraMedia(),
+    );
+  }
+}
+
+class CalculadoraMedia extends StatefulWidget {
+  const new({super.key});
+
+  @override
+  State<CalculadoraMedia> createState() => _CalculadoraMediaState();
+}
+
+class _CalculadoraMediaState extends State<CalculadoraMedia> {
+  final TextEditingController nota1Controller = TextEditingController();
+  final TextEditingController nota2Controller = TextEditingController();
+  final TextEditingController nota3Controller = TextEditingController();
+
+  String mensagem = '';
+  String aprovado = '';
+
+  void calculaMedia() {
+    double n1 = double.tryParse(nota1Controller.text) ?? 0;
+    double n2 = double.tryParse(nota2Controller.text) ?? 0;
+    double n3 = double.tryParse(nota3Controller.text) ?? 0;
+
+    setState(() {
+      double media = (n1 + n2 + n3) / 3;
+      mensagem = 'Média: ${media.toStringAsFixed(1)}';
+
+      if (media >= 6) {
+        aprovado = 'Situação: Aprovado';
+      } else {
+        aprovado = 'Situação: Reprovado';
+      }
+    });
+  }
+
+  void limparDados() {
+    setState(() {
+      nota1Controller.clear();
+      nota2Controller.clear();
+      nota3Controller.clear();
+      mensagem = '';
+      aprovado = '';
+    });
+  }
+
+  @override
+  void dispose() {
+    nota1Controller.dispose();
+    nota2Controller.dispose();
+    nota3Controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('Calculadora de Média')),
+      body: Padding(
+        padding: EdgeInsetsGeometry.all(20),
+        child: Column(
+          children: [
+            TextField(
+              controller: nota1Controller,
+              decoration: InputDecoration(
+                labelText: 'Nota 1',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            SizedBox(height: 20),
+            TextField(
+              controller: nota2Controller,
+              decoration: InputDecoration(
+                labelText: 'Nota 2',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            SizedBox(height: 20),
+            TextField(
+              controller: nota3Controller,
+              decoration: InputDecoration(
+                labelText: 'Nota 3',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            SizedBox(height: 30),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(onPressed: calculaMedia, child: Text('Calcula')),
+                SizedBox(height: 10, width: 10),
+                ElevatedButton(onPressed: limparDados, child: Text('Limpa')),
+              ],
+            ),
+            SizedBox(height: 30),
+            Text(mensagem, style: TextStyle(fontSize: 20)),
+            SizedBox(height: 10),
+            Text(
+              aprovado,
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+//Calculadora de IMC-------------------------------------------------------------------------------
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MeuApp());
+}
+
+class MeuApp extends StatelessWidget {
+  const new({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: CalculadoraImc(),
+    );
+  }
+}
+
+class CalculadoraImc extends StatefulWidget {
+  const new({super.key});
+
+  @override
+  State<CalculadoraImc> createState() => _CalculadoraImcState();
+}
+
+class _CalculadoraImcState extends State<CalculadoraImc> {
+  final TextEditingController pesoController = TextEditingController();
+  final TextEditingController alturaController = TextEditingController();
+
+  String mensagem = '';
+  String classificacao = '';
+
+  void calculaMedia() {
+    double peso = double.tryParse(pesoController.text) ?? 0;
+    double altura = double.tryParse(alturaController.text) ?? 0;
+
+    setState(() {
+      double media = peso / (altura * altura);
+      mensagem = 'IMC: ${media.toStringAsFixed(2)}';
+
+      if (media < 18.5) {
+        classificacao = 'Situação: Abaixo do peso';
+      } else if (media >= 18.5 && media <= 24.9) {
+        classificacao = 'Situação: Peso adequado';
+      } else {
+        classificacao = 'Situação: Acima do peso';
+      }
+    });
+  }
+
+  void limparDados() {
+    setState(() {
+      pesoController.clear();
+      alturaController.clear();
+      mensagem = '';
+      classificacao = '';
+    });
+  }
+
+  @override
+  void dispose() {
+    pesoController.dispose();
+    alturaController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('Cálculo de IMC')),
+      body: Padding(
+        padding: EdgeInsetsGeometry.all(20),
+        child: Column(
+          children: [
+            TextField(
+              controller: pesoController,
+              decoration: InputDecoration(
+                labelText: 'Peso',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            SizedBox(height: 20),
+            TextField(
+              controller: alturaController,
+              decoration: InputDecoration(
+                labelText: 'Altura',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            SizedBox(height: 30),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(onPressed: calculaMedia, child: Text('Calcula')),
+                SizedBox(height: 10, width: 10),
+                ElevatedButton(onPressed: limparDados, child: Text('Limpa')),
+              ],
+            ),
+            SizedBox(height: 30),
+            Text(mensagem, style: TextStyle(fontSize: 20)),
+            SizedBox(height: 10),
+            Text(
+              classificacao,
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+//Estoque Simples-----------------------------------------------------------------------------------
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const new({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: EstoqueSimples(),
+    );
+  }
+}
+
+class EstoqueSimples extends StatefulWidget {
+  const new({super.key});
+
+  @override
+  State<EstoqueSimples> createState() => _EstoqueSimplesState();
+}
+
+class _EstoqueSimplesState extends State<EstoqueSimples> {
+  int estoque = 0;
+
+  void aumentarEstoque() {
+    setState(() {
+      estoque++;
+    });
+  }
+
+  void diminuirEstoque() {
+    setState(() {
+      estoque--;
+
+      if (estoque < 0) {
+        zerarEstoque();
+      }
+    });
+  }
+
+  void zerarEstoque() {
+    setState(() {
+      estoque = 0;
+    });
+  }
+
+  void confirmarZerarEstoque() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Zerar estoque'),
+          content: Text('Tem certeza que deseja zerar o estoque?'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('Cancelar'),
+            ),
+            TextButton(
+              onPressed: () {
+                zerarEstoque();
+                Navigator.of(context).pop();
+              },
+              child: Text('Confirmar'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Gerenciamento de estoque simples'),
+        centerTitle: true,
+      ),
+      body: Padding(
+        padding: EdgeInsetsGeometry.all(20),
+        child: Column(
+          children: [
+            Text(
+              'Estoque atual: $estoque',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  onPressed: aumentarEstoque,
+                  child: Text('Entrada'),
+                ),
+                SizedBox(width: 20),
+                ElevatedButton(
+                  onPressed: diminuirEstoque,
+                  child: Text('Saída'),
+                ),
+              ],
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: confirmarZerarEstoque,
+              child: Text('Zerar Estoque'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+
