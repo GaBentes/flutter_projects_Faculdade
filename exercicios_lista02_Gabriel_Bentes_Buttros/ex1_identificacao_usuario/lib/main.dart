@@ -45,7 +45,8 @@ class _IdentificacaoUsuario extends State<IdentificacaoUsuario> {
     });
   }
 
-  void disposer(){
+  @override
+  void dispose(){
     nomeController.dispose();
     cidadeController.dispose();
     super.dispose();

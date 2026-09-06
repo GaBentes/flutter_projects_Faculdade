@@ -48,7 +48,8 @@ class _AntecessorSucessorState extends State<AntecessorSucessor> {
     });
   }
 
-  void disposer() {
+  @override
+  void dispose() {
     numeroController.dispose();
     super.dispose();
   }

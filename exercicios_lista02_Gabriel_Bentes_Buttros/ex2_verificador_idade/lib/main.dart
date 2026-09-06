@@ -51,7 +51,8 @@ class _VerificadorIdadeState extends State<VerificadorIdade> {
     });
   }
 
-  void disposer() {
+  @override
+  void dispose() {
     nomeController.dispose();
     idadeController.dispose();
     super.dispose();
